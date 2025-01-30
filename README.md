@@ -4,7 +4,7 @@ An all-in-one system management toolkit with interactive menu.
 
 ## Quick Install
 ```bash
-sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Salarvand-Education/AS-All/main/menu.sh)"
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Salarvand-Education/AS-All/main/Menu.sh)"
 ```
 
 ## Available Tools
