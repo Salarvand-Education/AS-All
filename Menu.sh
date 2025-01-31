@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -42,6 +41,7 @@ show_description() {
         5) echo -e "   ${CYAN}└─ HAProxy Load Balancer${NC}" ;;
         6) echo -e "   ${CYAN}└─ Unbound DNS Resolver${NC}" ;;
         7) echo -e "   ${CYAN}└─ Server Defender${NC}" ;;
+        8) echo -e "   ${CYAN}└─ AS-BBR Network Optimizer${NC}" ;; # New option
     esac
 }
 
@@ -70,10 +70,13 @@ show_menu() {
     echo -e "${GREEN}7)${NC} Server Defender"
     show_description 7
     echo
+    echo -e "${GREEN}8)${NC} AS-BBR Network Optimizer" # New option
+    show_description 8
+    echo
     echo -e "${RED}0)${NC} Exit"
     echo
     echo -e "${BLUE}────────────────────────────────────────${NC}"
-    echo -e "${YELLOW}Enter your choice [0-7]:${NC} \c"
+    echo -e "${YELLOW}Enter your choice [0-8]:${NC} \c"
 }
 
 # Functions to run scripts
@@ -108,8 +111,11 @@ run_script() {
             echo -e "${YELLOW}Running Server Defender...${NC}"
             bash <(curl -Ls https://raw.githubusercontent.com/Salarvand-Education/Server-Defender/main/install.sh)
             ;;
+        8)
+            echo -e "${YELLOW}Running AS-BBR Network Optimizer...${NC}"
+            sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Salarvand-Education/AS-BBR/main/AS-BBR.sh)"
+            ;;
     esac
-
     if [ $? -ne 0 ]; then
         echo -e "${RED}An error occurred!${NC}"
     fi
@@ -126,7 +132,7 @@ main() {
         show_menu
         read choice
         case $choice in
-            [1-7]) run_script $choice ;;
+            [1-8]) run_script $choice ;; # Updated range to include the new option
             0) 
                 clear
                 echo -e "${GREEN}Thank you for using System Management Tools!${NC}"
