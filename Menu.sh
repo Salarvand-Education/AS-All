@@ -43,7 +43,7 @@ show_description() {
         7) echo -e "   ${CYAN}└─ Server Defender${NC}" ;;
         8) echo -e "   ${CYAN}└─ AS-BBR Network Optimizer${NC}" ;;
         9) echo -e "   ${CYAN}└─ Enable Root SSH Access${NC}" ;;
-        10) echo -e "   ${CYAN}└─ Fail2Ban Manager${NC}" ;;
+        10) echo -e "   ${CYAN}└─ Fail2Ban Setup${NC}" ;; # New option added here
     esac
 }
 
@@ -78,7 +78,7 @@ show_menu() {
     echo -e "${GREEN}9)${NC} Enable Root SSH"
     show_description 9
     echo
-    echo -e "${GREEN}10)${NC} Fail2Ban Manager"
+    echo -e "${GREEN}10)${NC} Fail2Ban Setup" # New option added here
     show_description 10
     echo
     echo -e "${RED}0)${NC} Exit"
@@ -127,8 +127,8 @@ run_script() {
             echo -e "${YELLOW}Running Enable Root SSH...${NC}"
             sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Salarvand-Education/Enable-Root/main/Run.sh)"
             ;;
-        10)
-            echo -e "${YELLOW}Running Fail2Ban Manager...${NC}"
+        10) # New option added here
+            echo -e "${YELLOW}Running Fail2Ban Setup...${NC}"
             sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Salarvand-Education/fail2ban/main/fail2ban.sh)"
             ;;
     esac
@@ -148,7 +148,7 @@ main() {
         show_menu
         read choice
         case $choice in
-            [1-10]) run_script $choice ;;
+            [1-9]|10) run_script $choice ;; # Updated to allow '10' as a valid choice
             0) 
                 clear
                 echo -e "${GREEN}Thank you for using System Management Tools!${NC}"
