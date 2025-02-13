@@ -41,7 +41,8 @@ show_description() {
         5) echo -e "   ${CYAN}└─ HAProxy Load Balancer${NC}" ;;
         6) echo -e "   ${CYAN}└─ Unbound DNS Resolver${NC}" ;;
         7) echo -e "   ${CYAN}└─ Server Defender${NC}" ;;
-        8) echo -e "   ${CYAN}└─ AS-BBR Network Optimizer${NC}" ;; # New option
+        8) echo -e "   ${CYAN}└─ AS-BBR Network Optimizer${NC}" ;;
+        9) echo -e "   ${CYAN}└─ Enable Root SSH Access${NC}" ;;
     esac
 }
 
@@ -70,13 +71,16 @@ show_menu() {
     echo -e "${GREEN}7)${NC} Server Defender"
     show_description 7
     echo
-    echo -e "${GREEN}8)${NC} AS-BBR Network Optimizer" # New option
+    echo -e "${GREEN}8)${NC} AS-BBR Network Optimizer"
     show_description 8
+    echo
+    echo -e "${GREEN}9)${NC} Enable Root SSH"
+    show_description 9
     echo
     echo -e "${RED}0)${NC} Exit"
     echo
     echo -e "${BLUE}────────────────────────────────────────${NC}"
-    echo -e "${YELLOW}Enter your choice [0-8]:${NC} \c"
+    echo -e "${YELLOW}Enter your choice [0-9]:${NC} \c"
 }
 
 # Functions to run scripts
@@ -89,31 +93,35 @@ run_script() {
             ;;
         2)
             echo -e "${YELLOW}Running Hetzner Abuse Handler...${NC}"
-            bash <(curl -s https://raw.githubusercontent.com/Salarvand-Education/Hetzner-Abuse/main/Abuse.sh)
+            sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Salarvand-Education/Hetzner-Abuse/main/Abuse.sh)"
             ;;
         3)
             echo -e "${YELLOW}Running VPS Configuration for Direct...${NC}"
-            bash <(curl -s https://raw.githubusercontent.com/Salarvand-Education/Direct/main/Direct.sh)
+            sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Salarvand-Education/Direct/main/Direct.sh)"
             ;;
         4)
             echo -e "${YELLOW}Running Automated Reboot...${NC}"
-            bash <(curl -s https://raw.githubusercontent.com/Salarvand-Education/Areboot/main/Install.sh)
+            sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Salarvand-Education/Areboot/main/Install.sh)"
             ;;
         5)
             echo -e "${YELLOW}Running HAProxy Setup...${NC}"
-            bash <(curl -s https://raw.githubusercontent.com/Salarvand-Education/Haproxy/main/Haproxy.sh)
+            sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Salarvand-Education/Haproxy/main/Haproxy.sh)"
             ;;
         6)
             echo -e "${YELLOW}Running Unbound DNS Setup...${NC}"
-            bash <(curl -s https://raw.githubusercontent.com/Salarvand-Education/Unbound/main/install.sh)
+            sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Salarvand-Education/Unbound/main/install.sh)"
             ;;
         7)
             echo -e "${YELLOW}Running Server Defender...${NC}"
-            bash <(curl -Ls https://raw.githubusercontent.com/Salarvand-Education/Server-Defender/main/install.sh)
+            sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Salarvand-Education/Server-Defender/main/install.sh)"
             ;;
         8)
             echo -e "${YELLOW}Running AS-BBR Network Optimizer...${NC}"
             sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Salarvand-Education/AS-BBR/main/AS-BBR.sh)"
+            ;;
+        9)
+            echo -e "${YELLOW}Running Enable Root SSH...${NC}"
+            sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Salarvand-Education/Enable-Root/main/Run.sh)"
             ;;
     esac
     if [ $? -ne 0 ]; then
@@ -132,7 +140,7 @@ main() {
         show_menu
         read choice
         case $choice in
-            [1-8]) run_script $choice ;; # Updated range to include the new option
+            [1-9]) run_script $choice ;;
             0) 
                 clear
                 echo -e "${GREEN}Thank you for using System Management Tools!${NC}"
